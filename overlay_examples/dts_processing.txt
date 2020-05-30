@@ -1,0 +1,3 @@
+## Target .dts cpp preprocessing!
+cpp -nostdinc -I /usr/src/linux-headers-5.7.0-rc6-bone5/include -I arch -undef -x assembler-with-cpp BB-SPI0-SC16IS740.dts > BB-SPI0-SC16IS740.dts.processed
+dtc -@ -I dts -O dtb -o BB-SPI0-SC16IS740.dtbo BB-SPI0-SC16IS740.dts.processed
