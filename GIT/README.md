@@ -1,4 +1,4 @@
-## Some basic GitHub GIT commands
+## Some very basic GitHub GIT commands
 
 ### Create a new repository using the command line
 ```
@@ -21,6 +21,7 @@
 	$ git rm <file>
 	$ git commit -a -m "commit message: short and very descriptive"
 	$ git log
+	$ git diff
 	$ git push
 
 ### [Oliver Steele | Blog] My Git Workflow

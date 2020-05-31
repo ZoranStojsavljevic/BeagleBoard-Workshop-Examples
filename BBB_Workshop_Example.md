@@ -1,14 +1,12 @@
 ## BBB Debian Buster Environment Setup
 
-The BBB board Revision used is REV. A (0x0A5C).
-
 ### Explored Embedded HW Configuration:
 https://github.com/ZoranStojsavljevic/MikroE_BeagleBone-Black-BSP_Integration/blob/master/BBB-debian_buster/overlay_examples/i2c2_sc16is740/MIKROE-3349/READM>
 
 ![](Images/beaglebone-mikrobus-cape.jpg)
 ![](Images/beaglebone-mikrobus-cape-SC16IS740.jpg)
 
-MikroBus used is MikroBus 1 on MikroBus Cape4 HW extension.
+MikroBus used is MikroBus 1 on MikroBus Cape4 BBB HW extension.
 
 ### Installing arm cross compiler on the Debian Buster host
 
@@ -45,7 +43,7 @@ U-Boot Patches:
 	user@localhost:~/u-boot$
 	wget -c https://github.com/eewiki/u-boot-patches/raw/master/v2019.04/0001-am335x_evm-uEnv.txt-bootz-n-fixes.patch
 	wget -c https://github.com/eewiki/u-boot-patches/raw/master/v2019.04/0002-U-Boot-BeagleBone-Cape-Manager.patch
-  
+
 	patch -p1 < 0001-am335x_evm-uEnv.txt-bootz-n-fixes.patch
 	patch -p1 < 0002-U-Boot-BeagleBone-Cape-Manager.patch
 
@@ -56,10 +54,12 @@ Configure and Build:
 	make ARCH=arm CROSS_COMPILE=${CC} am335x_evm_defconfig
 	make ARCH=arm CROSS_COMPILE=${CC}
 
+	With ${CC} = arm-linux-gnueabihf- :
+
 	Debian:
 	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 menuconfig
 
-	Optinal for Fedora:
+	Optional for Fedora:
 	ARCH=arm CROSS_COMPILE=arm-linux-gnu- make -j8 menuconfig
 	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 menuconfig (if Linaro cross GCC compiler installed)
 
