@@ -1,0 +1,103 @@
+[vuser@fedora31-ssd Workshop_Examples]$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   Images/beaglebone-ETH-cape.jpg
+	new file:   Images/beaglebone-mikrobus-cape-SC16IS740.jpg
+	new file:   Images/beaglebone-mikrobus-cape.jpg
+	new file:   Workshop_Example.md
+	new file:   overlay_examples/BB-I2C2-SC16IS740-00A0.dts
+	new file:   overlay_examples/BB-SPI0-SC16IS740.dts
+	new file:   overlay_examples/dts_processing.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+	modified:   Workshop_Example.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	GIT/
+
+[vuser@fedora31-ssd Workshop_Examples]$ git add GIT/
+[vuser@fedora31-ssd Workshop_Examples]$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   GIT/example.txt
+	new file:   Images/beaglebone-ETH-cape.jpg
+	new file:   Images/beaglebone-mikrobus-cape-SC16IS740.jpg
+	new file:   Images/beaglebone-mikrobus-cape.jpg
+	new file:   Workshop_Example.md
+	new file:   overlay_examples/BB-I2C2-SC16IS740-00A0.dts
+	new file:   overlay_examples/BB-SPI0-SC16IS740.dts
+	new file:   overlay_examples/dts_processing.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+	modified:   Workshop_Example.md
+
+[vuser@fedora31-ssd Workshop_Examples]$ git commit -a -m "Initial BBB_Workshop_Example architecture committed"
+[master 28d2087] Initial BBB_Workshop_Example architecture committed
+ 9 files changed, 793 insertions(+), 1 deletion(-)
+ create mode 100644 GIT/example.txt
+ create mode 100644 Images/beaglebone-ETH-cape.jpg
+ create mode 100644 Images/beaglebone-mikrobus-cape-SC16IS740.jpg
+ create mode 100644 Images/beaglebone-mikrobus-cape.jpg
+ create mode 100644 Workshop_Example.md
+ create mode 100644 overlay_examples/BB-I2C2-SC16IS740-00A0.dts
+ create mode 100644 overlay_examples/BB-SPI0-SC16IS740.dts
+ create mode 100644 overlay_examples/dts_processing.txt
+[vuser@fedora31-ssd Workshop_Examples]$ 
+[vuser@fedora31-ssd Workshop_Examples]$ 
+[vuser@fedora31-ssd Workshop_Examples]$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+[vuser@fedora31-ssd Workshop_Examples]$ git log
+commit 28d2087cfd940d751136663e939d30ab2c2e4537 (HEAD -> master)
+Author: Zoran Stojsavljevic <zoran.stojsavljevic@gmail.com>
+Date:   Sat May 30 10:40:42 2020 +0200
+
+    Initial BBB_Workshop_Example architecture committed
+
+commit c732176d6a6903e47079f94d94eaa80600beb0b8 (origin/master, origin/HEAD)
+Author: Zoran Stojsavljevic <zoran.stojsavljevic@gmail.com>
+Date:   Sat May 30 05:12:55 2020 +0200
+
+    Initial commit
+[vuser@fedora31-ssd Workshop_Examples]$ git push
+error: unable to read askpass response from '/usr/libexec/openssh/gnome-ssh-askpass'
+Username for 'https://github.com': zoran.stojsavljevic@gmail.com
+error: unable to read askpass response from '/usr/libexec/openssh/gnome-ssh-askpass'
+Password for 'https://zoran.stojsavljevic@gmail.com@github.com': 
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (14/14), 4.46 MiB | 701.00 KiB/s, done.
+Total 14 (delta 0), reused 0 (delta 0)
+To https://github.com/ZoranStojsavljevic/Workshop_Examples.git
+   c732176..28d2087  master -> master
+[vuser@fedora31-ssd Workshop_Examples]$ git log
+commit 28d2087cfd940d751136663e939d30ab2c2e4537 (HEAD -> master, origin/master, origin/HEAD)
+Author: Zoran Stojsavljevic <zoran.stojsavljevic@gmail.com>
+Date:   Sat May 30 10:40:42 2020 +0200
+
+    Initial BBB_Workshop_Example architecture committed
+
+commit c732176d6a6903e47079f94d94eaa80600beb0b8
+Author: Zoran Stojsavljevic <zoran.stojsavljevic@gmail.com>
+Date:   Sat May 30 05:12:55 2020 +0200
+
+    Initial commit
+[vuser@fedora31-ssd Workshop_Examples]$ 
