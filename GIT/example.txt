@@ -79,7 +79,7 @@ Date:   Sat May 30 05:12:55 2020 +0200
 error: unable to read askpass response from '/usr/libexec/openssh/gnome-ssh-askpass'
 Username for 'https://github.com': zoran.stojsavljevic@gmail.com
 error: unable to read askpass response from '/usr/libexec/openssh/gnome-ssh-askpass'
-Password for 'https://zoran.stojsavljevic@gmail.com@github.com': 
+Password for 'https://zoran.stojsavljevic@gmail.com@github.com': ********************
 Enumerating objects: 16, done.
 Counting objects: 100% (16/16), done.
 Delta compression using up to 4 threads
