@@ -23,6 +23,8 @@
 	$ git log
 	$ git diff
 	$ git push
+	$ git pull
+	$ git describe
 
 ### [Oliver Steele | Blog] My Git Workflow
 https://blog.osteele.com/2008/05/my-git-workflow/

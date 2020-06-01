@@ -36,7 +36,7 @@
 		"spi0";
 
 	/*
-	 * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+	 * [1] Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
 	 */
 	fragment@0 {
 		target-path="/";
@@ -51,7 +51,7 @@
 	};
 
 	/*
-	 * Free up the pins used by the cape from the pinmux helpers.
+	 * [2] Free up the pins used by the cape from the pinmux helpers
 	 */
 	fragment@1 {
 		target = <&ocp>;
@@ -74,6 +74,10 @@
 		};
 	};
 
+	/*
+	 * [3] Define GPIO pins used as RESET and IRQ
+	 * [3] Define SPI0 controller by GPIOs used
+	 */
 	fragment@2 {
 		target = <&am33xx_pinmux>;
 		__overlay__ {
@@ -96,6 +100,9 @@
 		};
 	};
 
+	/*
+	 * [4] Define SPI0 buses
+	 */
 	fragment@3 {
 		target = <&spi0>;
 		__overlay__ {
@@ -109,7 +116,9 @@
 		};
 	};
 
-	/* The spi config binding everything together */
+	/*
+	 * [5] Define target device/in this example ETH controller
+	 */
 	fragment@4 {
 		target = <&spi0>;
 		__overlay__ {
