@@ -38,6 +38,10 @@ Download U-Boot:
 	cd u-boot/
 	git checkout v2019.04 -b tmp
 
+Or download U-Boot v2019.04 from:
+
+	https://github.com/u-boot/u-boot/releases/tag/v2019.04
+
 U-Boot Patches:
 
 	user@localhost:~/u-boot$

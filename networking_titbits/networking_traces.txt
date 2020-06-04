@@ -1,0 +1,135 @@
+root@arm:/home/debian# nmap -T5 -sP 192.168.100.0/24
+bash: nmap: command not found
+root@arm:/home/debian# apt install nmap~
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+E: Unable to locate package nmap~
+root@arm:/home/debian# apt install nmap
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libblas3 libgfortran5 liblinear3 liblua5.3-0 libpcap0.8 nmap-common
+Suggested packages:
+  liblinear-tools liblinear-dev ncat ndiff zenmap
+The following NEW packages will be installed:
+  libblas3 libgfortran5 liblinear3 liblua5.3-0 libpcap0.8 nmap nmap-common
+0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
+3 not fully installed or removed.
+Need to get 6,283 kB of archives.
+After this operation, 26.6 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://deb.debian.org/debian buster/main armhf libgfortran5 armhf 8.3.0-6 [213 kB]
+Get:2 http://deb.debian.org/debian buster/main armhf libblas3 armhf 3.8.0-2 [109 kB]
+Get:3 http://deb.debian.org/debian buster/main armhf liblinear3 armhf 2.1.0+dfsg-4 [35.6 kB]
+Get:4 http://deb.debian.org/debian buster/main armhf liblua5.3-0 armhf 5.3.3-1.1 [97.7 kB]
+Get:5 http://deb.debian.org/debian buster/main armhf libpcap0.8 armhf 1.8.1-6 [125 kB]
+Get:6 http://deb.debian.org/debian buster/main armhf nmap-common all 7.70+dfsg1-6 [3,899 kB]
+Get:7 http://deb.debian.org/debian buster/main armhf nmap armhf 7.70+dfsg1-6 [1,805 kB]
+Fetched 6,283 kB in 1s (6,433 kB/s)
+Selecting previously unselected package libgfortran5:armhf.
+(Reading database ... 52372 files and directories currently installed.)
+Preparing to unpack .../0-libgfortran5_8.3.0-6_armhf.deb ...
+Unpacking libgfortran5:armhf (8.3.0-6) ...
+Selecting previously unselected package libblas3:armhf.
+Preparing to unpack .../1-libblas3_3.8.0-2_armhf.deb ...
+Unpacking libblas3:armhf (3.8.0-2) ...
+Selecting previously unselected package liblinear3:armhf.
+Preparing to unpack .../2-liblinear3_2.1.0+dfsg-4_armhf.deb ...
+Unpacking liblinear3:armhf (2.1.0+dfsg-4) ...
+Selecting previously unselected package liblua5.3-0:armhf.
+Preparing to unpack .../3-liblua5.3-0_5.3.3-1.1_armhf.deb ...
+Unpacking liblua5.3-0:armhf (5.3.3-1.1) ...
+Selecting previously unselected package libpcap0.8:armhf.
+Preparing to unpack .../4-libpcap0.8_1.8.1-6_armhf.deb ...
+Unpacking libpcap0.8:armhf (1.8.1-6) ...
+Selecting previously unselected package nmap-common.
+Preparing to unpack .../5-nmap-common_7.70+dfsg1-6_all.deb ...
+Unpacking nmap-common (7.70+dfsg1-6) ...
+Selecting previously unselected package nmap.
+Preparing to unpack .../6-nmap_7.70+dfsg1-6_armhf.deb ...
+Unpacking nmap (7.70+dfsg1-6) ...
+Setting up libpcap0.8:armhf (1.8.1-6) ...
+Setting up dracut (048+80-2) ...
+dracut: Generating /boot/initrd.img-4.19.106-bone49
+depmod: FATAL: could not load /boot/System.map-4.19.106-bone49-interim: No such file or directory
+dracut: Generating /boot/initrd.img-4.19.106-bone49-interim
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+libkmod: ERROR ../libkmod/libkmod.c:586 kmod_search_moddep: could not open moddep file '/lib/modules/4.19.106-bone49-interim//modules.dep.bin'
+dracut: Cannot find module directory /lib/modules/4.19.106-bone49-interim/
+dracut: and --no-kernel was not specified
+dpkg: error processing package dracut (--configure):
+ installed dracut package post-installation script subprocess returned error exit status 1
+Setting up libgfortran5:armhf (8.3.0-6) ...
+Setting up nmap-common (7.70+dfsg1-6) ...
+Setting up liblua5.3-0:armhf (5.3.3-1.1) ...
+dpkg: dependency problems prevent configuration of cryptsetup-initramfs:
+ cryptsetup-initramfs depends on initramfs-tools (>= 0.129) | linux-initramfs-tool; however:
+  Package initramfs-tools is not installed.
+  Package linux-initramfs-tool is not installed.
+  Package initramfs-tools which provides linux-initramfs-tool is not installed.
+  Package dracut which provides linux-initramfs-tool is not configured yet.
+
+dpkg: error processing package cryptsetup-initramfs (--configure):
+ dependency problems - leaving unconfigured
+dpkg: dependency problems prevent configuration of cryptsetup:
+ cryptsetup depends on cryptsetup-initramfs (>= 2:2.0.3-1); however:
+  Package cryptsetup-initramfs is not configured yet.
+
+dpkg: error processing package cryptsetup (--configure):
+ dependency problems - leaving unconfigured
+Setting up libblas3:armhf (3.8.0-2) ...
+update-alternatives: using /usr/lib/arm-linux-gnueabihf/blas/libblas.so.3 to provide /usr/lib/arm-linux-gnueabihf/libblas.so.3 (libblas.so.3-arm-linux-gnueabi
+hf) in auto mode
+Setting up liblinear3:armhf (2.1.0+dfsg-4) ...
+Setting up nmap (7.70+dfsg1-6) ...
+Processing triggers for man-db (2.8.5-2) ...
+Processing triggers for libc-bin (2.28-10) ...
+Errors were encountered while processing:
+ dracut
+ cryptsetup-initramfs
+ cryptsetup
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+root@arm:/home/debian# nmap -T5 -sP 192.168.100.0/24
+Starting Nmap 7.70 ( https://nmap.org ) at 2020-06-03 15:04 UTC
+Nmap scan report for 192.168.100.1
+Host is up (0.0019s latency).
+MAC Address: F8:98:EF:08:76:33 (Unknown)
+Nmap scan report for 192.168.100.2
+Host is up (0.075s latency).
+MAC Address: AC:FD:CE:78:94:2F (Intel Corporate)
+Nmap scan report for 192.168.100.3
+Host is up (0.29s latency).
+MAC Address: B0:C1:9E:0B:83:7B (zte)
+Nmap scan report for 192.168.100.21
+Host is up (0.17s latency).
+MAC Address: AC:FD:CE:78:94:2F (Intel Corporate)
+Nmap scan report for 192.168.100.7
+Host is up.
+Nmap done: 256 IP addresses (5 hosts up) scanned in 11.85 seconds
+root@arm:/home/debian# uname -a
+Linux arm 5.7.0-rc6-bone5 #1 PREEMPT Tue May 26 20:31:29 CEST 2020 armv7l GNU/Linux
+root@arm:/home/debian#
