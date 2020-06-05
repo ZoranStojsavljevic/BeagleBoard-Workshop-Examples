@@ -78,6 +78,10 @@ If your Linux distribution uses SELinux for security (Fedora and Red Hat, for ex
 
 The /srv directory contains “data for services provided by the system.” If you were using the Apache HTTP server to serve a website, you’d likely store your website’s files in a directory inside the /srv directory.
 
+#### /sys - Kernel Driver Interface
+
+/sys is an interface to the kernel. Specifically, it provides a filesystem-like view of information and configuration settings that the kernel provides, much like /proc. Writing to these files may or may not write to the actual device, depending on the setting you're changing. It isn't only for managing devices, though that's a common use case. /sys was introduced before the Linux kernel reached 2.6 (back when there was a 2.4/2.5 split).
+
 #### /tmp – Temporary Files
 
 Applications store temporary files in the /tmp directory. These files are generally deleted whenever your system is restarted and may be deleted at any time by utilities such as tmpwatch.

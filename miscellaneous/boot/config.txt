@@ -1,0 +1,8 @@
+## Option 1
+## dtparam=spi0=on
+
+## Device Tree debug
+dtdebug=1
+
+## DToverlay parameters
+## dtoverlay=BB-SPI0-SC16IS740-00A0,clkrate=1843200

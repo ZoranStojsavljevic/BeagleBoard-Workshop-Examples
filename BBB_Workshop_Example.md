@@ -61,7 +61,9 @@ Configure and Build:
 	With ${CC} = arm-linux-gnueabihf- :
 
 	Debian:
+	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 am335x_evm_defconfig
 	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 menuconfig
+	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8
 
 	Optional for Fedora:
 	ARCH=arm CROSS_COMPILE=arm-linux-gnu- make -j8 menuconfig
@@ -102,13 +104,26 @@ Install Bootloader:
 	$ sudo dd if=./u-boot/MLO of=${DISK} count=1 seek=1 bs=128k
 	$ sudo dd if=./u-boot/u-boot.img of=${DISK} count=2 seek=1 bs=384k
 
+For the Workshop:
+
+	$ sudo dd if=MLO of=/dev/sdc count=1 seek=1 bs=128k
+	$ sudo dd if=u-boot.img of=/dev/sdc count=2 seek=1 bs=384k
+
 Create User / partition for the Debian Buster:
 
 	$ echo "Create primary partition 1 for rootfs"
-	$ sudo echo -e "n\np\n1\n\n+16384M\nw\n" | fdisk /dev/sdb
+	$ sudo echo -e "n\np\n1\n\n+16384M\nw\n" | fdisk ${DISK}
+
+	$ echo "Formatting primary partition ${DISK} for rootfs"
+	$ sudo mkfs.ext4 -F ${DISK}
+
+For the Workshop:
+
+	$ echo "Create primary partition 1 for rootfs"
+	$ sudo echo -e "n\np\n1\n\n+16384M\nw\n" | /sbin/fdisk /dev/sdc
 
 	$ echo "Formatting primary partition sdb1 for rootfs"
-	$ sudo mkfs.ext4 -F /dev/sdb1
+	$ sudo mkfs.ext4 -F /dev/sdc1
 
 ### Supported Linux Kernels out of the box:
 

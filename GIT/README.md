@@ -28,3 +28,9 @@
 
 ### [Oliver Steele | Blog] My Git Workflow
 https://blog.osteele.com/2008/05/my-git-workflow/
+
+### Workshop addendums
+
+How To Create and Apply Git Patch Files
+
+https://devconnected.com/how-to-create-and-apply-git-patch-files/
