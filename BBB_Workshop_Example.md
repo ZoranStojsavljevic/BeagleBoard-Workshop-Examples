@@ -181,6 +181,10 @@ Execute the following to build the custom menuconfig:
 	host$ git checkout am33x-v4.19
 	host$ ./build_kernel.sh
 
+Please, read very carefully the following net pointer:
+
+https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/blob/master/kernel_titbits/Kernel_Porting_Guide.md
+
 ### Common BeagleBone Black Linux kernel requirements
 
 Here are the custom changes for menuconfig, to be done in order to have proper kernel for the example:
@@ -301,6 +305,24 @@ Download Debian Root File System:
 
 	$ wget -c https://rcn-ee.com/rootfs/eewiki/minfs/debian-10.4-minimal-armhf-2020-05-10.tar.xz
 	$ tar -xvf debian-10.4-minimal-armhf-2020-05-10.tar.xz
+
+### Copy Root File System
+
+Mounting point for the SDcard could be various paths:
+
+	/media/rootfs/
+	/run/media/vuser/rootfs/
+
+Assuming /run/media/vuser/rootfs mounting point, the following should be done:
+
+	$ sudo tar xfvp ./*-*-*-armhf-*/armhf-rootfs-*.tar -C /run/media/vuser/rootfs
+	$ sync
+	$ sudo chown root:root /run/media/vuser/rootfs
+	$ sudo chmod 755 /run/media/vuser/rootfs/
+
+WARNING: Please, do note that in the /run/media/vuser/rootfs/boot/ there is NO
+any data, since the given Debian Root File System tends to be GENERIC Root
+Tree, applicable for ANY ARM architecture!
 
 ### BBB P9 header I2C2 Overlay (BB-I2C2-SC16IS740-00A0.dts)
 ```
