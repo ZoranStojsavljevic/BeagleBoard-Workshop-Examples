@@ -66,6 +66,7 @@ Configure and Build:
 	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8
 
 	Optional for Fedora:
+	ARCH=arm CROSS_COMPILE=arm-linux-gnu- make -j8 am335x_evm_defconfig
 	ARCH=arm CROSS_COMPILE=arm-linux-gnu- make -j8 menuconfig
 	ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 menuconfig (if Linaro cross GCC compiler installed)
 
