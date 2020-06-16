@@ -184,7 +184,7 @@ Execute the following to build the custom menuconfig:
 
 Please, read very carefully the following net pointer:
 
-https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/blob/master/kernel_titbits/Kernel_Porting_Guide.md
+https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/blob/master/Kernel_Porting_Guide/Kernel_Porting_Guide.md
 
 ### Common BeagleBone Black Linux kernel requirements
 
@@ -307,7 +307,7 @@ Download Debian Root File System:
 	$ wget -c https://rcn-ee.com/rootfs/eewiki/minfs/debian-10.4-minimal-armhf-2020-05-10.tar.xz
 	$ tar -xvf debian-10.4-minimal-armhf-2020-05-10.tar.xz
 
-### Copy Root File System
+### Copy the Root File System
 
 Mounting point for the SDcard could be various paths:
 
@@ -566,4 +566,4 @@ https://cateee.net/lkddb/web-lkddb/SERIAL_DEV_CTRL_TTYPORT.html
 	[    2.227634] input: tps65217_pwr_but as /devices/platform/ocp/44c00000.interconnect/44c00000.interconnect:segment@200000/44e0b000.target-module/44e0b000.i2c/i2c-0/0-0024/tps65217-pwrbutton/input/input0
 	[    2.229011] omap_i2c 44e0b000.i2c: bus 0 rev0.11 at 400 kHz
 	[    2.263240] omap_i2c 4819c000.i2c: bus 2 rev0.11 at 100 kHz
-	root@arm:/home/debian# 
+	root@arm:/home/debian#

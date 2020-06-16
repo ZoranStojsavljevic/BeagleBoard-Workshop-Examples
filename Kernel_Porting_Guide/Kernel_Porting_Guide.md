@@ -101,6 +101,9 @@ directory (example for the `uname -r`, in this case 5.7.0-rc6-bone5 kernel):
 	$ sudo ln -s /usr/src/${kernel_version} source
 	$ sudo ln -s /usr/src/${kernel_version}	build
 
+### Create the GENERIC initramfs/initrd for the very first time
+https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md
+
 ### File Systems Table (/etc/fstab)
 
 	$ sudo sh -c "echo '/dev/mmcblk0p1 / auto errors=remount-ro 0 1' >> /run/media/vuser/rootfs/etc/fstab"
