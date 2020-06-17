@@ -5,6 +5,9 @@
 ### Executed on Debian 10 (Debian Buster) Linux for the Open Source (as targeted platform) BBB platform
 ### Please, do note that this initramfs is a VERY generic one, applicable for all the ARM platforms!
 
+### Set the root_project directory as a root_initramfs_dir absolute path
+root_initramfs_dir=`pwd`
+
 ### Make the necessary directories in which to work and where the output will be stored so it is accessible from the website
 mkdir -p work/initramfs
 cd work
@@ -28,7 +31,7 @@ sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/g' .config
 diff -c .config CONFIG
 
 ### Execute the following commands for building the initramfs
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- CONFIG_PREFIX=/home/vagrant/initrd_bbox/work/initramfs /home/vagrant/initrd_bbox/work/initramfs install
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- CONFIG_PREFIX=$root_initramfs_dir/work/initramfs $root_initramfs_dir/work/initramfs install
 
 cp CONFIG .config.old
 cd ../initramfs
@@ -69,7 +72,7 @@ echo  beagleboneblack > etc/hostname
 
 echo "root::0:0:root:/root:/bin/sh" > etc/passwd
 
-### Do NOT use a soft link - problematic unexplored part, to be (for now) skipped!!!
+### Do NOT create a soft link - problematic unexplored part, to be (for now) skipped!!!
 ### ln -s sbin/init init
 
 ### Create the initramfs
