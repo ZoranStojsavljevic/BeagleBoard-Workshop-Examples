@@ -75,9 +75,8 @@ echo "root::0:0:root:/root:/bin/sh" > etc/passwd
 ### Do NOT create a soft link - problematic unexplored part, to be (for now) skipped!!!
 ### ln -s sbin/init init
 
-### Create the initramfs
-### find . -depth -print | cpio -ocvB | gzip -c > ../initramfs.cpio.gz <<== Just for the future considerations!
-find . | cpio --create --format='newc' > ../../initramfs
-cd ../..
-gzip initramfs
-mv initramfs.gz initramfs.img
+### Create the initramfs in three formats: .cpio.xz, .cpio.gz and .img in $(root_initramfs_dir):
+### find . 2>/dev/null | cpio -c -o | xz -9 --format=lzma > ../../initramfs.cpio.xz
+find . -depth -print | cpio -c -o | xz -9 --format=lzma > ../../initramfs.cpio.xz
+find . -depth -print | cpio -ocvB | gzip -c > ../../initramfs.cpio.gz
+find . -depth -print | cpio --create --format='newc' | gzip > ../../initramfs.img

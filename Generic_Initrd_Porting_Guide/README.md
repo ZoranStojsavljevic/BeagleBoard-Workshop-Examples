@@ -6,7 +6,7 @@ The following script should be executed in order to create the GENERIC /boot/ini
 	$ ./configure_initramfs.sh
 
 From the $(root_initramfs_dir), which is equivalent to `pwd` of the script execution directory,
-the following outcome/creation of the initramfs.img should happen in the root_initramfs_dir:
+the following outcome/creation of the initramfs.img should happen in the $(root_initramfs_dir):
 
 	$ ls -al
 	total 6136
@@ -22,6 +22,8 @@ the $(root_initramfs_dir):
 	$ tree -L 3
 	.
 	├── configure_initramfs.sh
+	├── initramfs.cpio.gz
+	├── initramfs.cpio.xz
 	├── initramfs.img
 	└── work
 	    ├── busybox-1.31.1
@@ -92,9 +94,23 @@ the $(root_initramfs_dir):
 	        ├── sys
 	        └── usr
 
-	45 directories, 25 files
+	45 directories, 27 files
 
-Then, on the target BBB platform, it should be renamed in the /boot directory as:
+Since the initramfs.img is used for the special purposes. Currently, the / mount point is done
+directly to SDcard.
+
+Here is the kernel command line, used for the SDcard (from booting dmesg logs):
+
+Kernel command line: console=ttyO0,115200n8 bone_capemgr.uboot_capemgr_enabled=1 root=/dev/mmcblk0p1 ro \
+rootfstype=ext4 rootwait coherent_pool=1M net.ifnames=0 rng_core.default_quality=100
+
+### Using an initramfs.img, for the special testing purposes
+
+In the kernel command line, the following should be changed (initial - root=/dev/mmcblk0p1 ro):
+
+	root=/dev/ram0 rw
+
+On the target BBB platform, initramfs.img should be renamed in the /boot directory as:
 
 	$ mv initramfs.img initrd.img-$(uname -r)
 
