@@ -1,3 +1,5 @@
+## THIS EXAMPLE still does NOT work, does need a major rework - UNDER CONSTRUCTION!
+
 ### Generating the GENERIC initramfs/initrd
 
 The following script should be executed in order to create the GENERIC /boot/initrd.img-$(uname -r) :
