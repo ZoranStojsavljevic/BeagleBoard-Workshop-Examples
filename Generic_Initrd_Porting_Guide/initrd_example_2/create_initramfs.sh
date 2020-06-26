@@ -53,7 +53,7 @@ cp .config .config.old
 sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/g' .config
 
 ### Verify differences and display 'em
-sudo diff -c .config .config.old
+diff -c .config .config.old
 
 ### Execute the following commands for building the initramfs
 sudo ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make CONFIG_PREFIX=/mnt/initrd /mnt/initrd install

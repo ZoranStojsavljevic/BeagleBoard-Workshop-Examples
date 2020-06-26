@@ -1,4 +1,10 @@
-## THIS EXAMPLE still does NOT work, does need a major rework - UNDER CONSTRUCTION!
+## THIS EXAMPLE (./configure_initramfs.sh) still does NOT work, would NOT be fixed in this context!
+
+This one is here just for the references and some useful bash commands, for anybody to try to make a better one. :)
+
+Please, refer to the WORKING initrd_example_2 (file create_initramfs.sh) example for the true help in:
+
+https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/initrd_example_2
 
 ### Generating the GENERIC initramfs/initrd
 
