@@ -1,4 +1,4 @@
-### THIS EXAMPLE (./create_initramfs.sh) does work!
+### THIS EXAMPLE (./create_initrd.sh) does work!
 
 Was created on the Debian Buster, with the following features/parameters exposed:
 

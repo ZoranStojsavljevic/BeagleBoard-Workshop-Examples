@@ -56,9 +56,7 @@ mkdir lib usr/lib
 rsync -a /usr/arm-linux-gnueabihf/lib/ ./lib/
 
 ### Add mount points
-mkdir proc sys root
-### /etc and configuration files
-mkdir etc
+mkdir proc sys root etc
 
 echo "null::sysinit:/bin/mount -a" > etc/inittab
 echo "null::sysinit:/bin/hostname -F /etc/hostname" >> etc/inittab
@@ -72,11 +70,20 @@ echo  beagleboneblack > etc/hostname
 
 echo "root::0:0:root:/root:/bin/sh" > etc/passwd
 
-### Do NOT create a soft link - problematic unexplored part, to be (for now) skipped!!!
-### ln -s sbin/init init
+touch init
+chmod 777 init
 
-### Create the initramfs in three formats: .cpio.xz, .cpio.gz and .img in $(root_initramfs_dir):
-### find . 2>/dev/null | cpio -c -o | xz -9 --format=lzma > ../../initramfs.cpio.xz
-find . -depth -print | cpio -c -o | xz -9 --format=lzma > ../../initramfs.cpio.xz
-find . -depth -print | cpio -ocvB | gzip -c > ../../initramfs.cpio.gz
-find . -depth -print | cpio --create --format='newc' | gzip > ../../initramfs.img
+### Create the init file
+cat >> init << EOF
+#!/bin/sh
+
+### Mount things needed by this script
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+
+echo "Dropping to a shell"
+exec sh
+EOF
+
+### Create the initramfs as .cpio.gz in $(root_initramfs_dir):
+find . -print0 | cpio --null --create --verbose --format='newc' | gzip --best > ../../initramfs.cpio.gz
