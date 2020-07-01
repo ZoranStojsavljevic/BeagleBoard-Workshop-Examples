@@ -1,4 +1,4 @@
-## Short INITRAMFS guide (with short working example presented)
+## Short INITRAMFS guide (with the basic working example presented)
 
 https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/initramfs
 
@@ -20,7 +20,7 @@ following outcome/creation of the initramfs.cpio.gz should happen in the $(root_
 	-rw-r--r-- 1 vagrant vagrant 6210165 Jul  1 18:03 initramfs.cpio.gz
 	drwxr-xr-x 4 vagrant vagrant    4096 Jul  1 18:03 work
 
-And NOT only... The folowing is the outcome of the ./configure_initramfs.sh script execution in
+And NOT only... The folowing is the outcome of the ./create_initramfs.sh script execution in
 the $(root_initramfs_dir):
 
 	$ tree -L 3
@@ -160,11 +160,11 @@ Was created on the Debian Buster, with the following features/parameters exposed
 
 Verified by the following U-BOOT ash script from the (patched by overlay patches) U-Boot 2019.04:
 
-setenv autoload no
-setenv initrd_high 0xffffffff
-setenv loadkernel 'tftp 0x82000000 zImage'
-setenv loadinitrd 'tftp 0x88080000 initramfs.img.uboot; setenv initrd_size ${filesize}'
-setenv loadfdt 'tftp 0x88000000 am335x-boneblack.dtb'
-setenv bootargs 'console=ttyO0,115200n8 root=/dev/ram0 ip=dhcp'
-setenv bootcmd_ram 'dhcp; setenv serverip 192.168.178.20; run loadkernel; run loadinitrd; run loadfdt; bootz 0x82000000 0x88080000 0x88000000'
-run bootcmd_ram
+	setenv autoload no
+	setenv initrd_high 0xffffffff
+	setenv loadkernel 'tftp 0x82000000 zImage'
+	setenv loadinitrd 'tftp 0x88080000 initramfs.img.uboot; setenv initrd_size ${filesize}'
+	setenv loadfdt 'tftp 0x88000000 am335x-boneblack.dtb'
+	setenv bootargs 'console=ttyO0,115200n8 root=/dev/ram0 ip=dhcp'
+	setenv bootcmd_ram 'dhcp; setenv serverip 192.168.178.20; run loadkernel; run loadinitrd; run loadfdt; bootz 0x82000000 0x88080000 0x88000000'
+	run bootcmd_ram
