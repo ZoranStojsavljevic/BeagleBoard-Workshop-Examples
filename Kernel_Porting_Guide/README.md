@@ -1,99 +1,134 @@
-## The Linux Directory Structure, Explained
-https://www.howtogeek.com/117435/htg-explains-the-linux-directory-structure-explained/
+### Debian Root File System
 
-If you’re coming from Windows, the Linux file system structure can seem particularly alien. The C:\ drive and drive letters are gone, replaced by a / and cryptic-sounding directories, most of which have three letter names.
+	Debian Buster user: debian, passwd: temppwd
+	Debian Buster root: root, passwd: root
 
-The Filesystem Hierarchy Standard (FHS) defines the structure of file systems on Linux and other UNIX-like operating systems. However, Linux file systems also contain some directories that aren’t yet defined by the standard.
+Download Debian Root File System:
 
-#### / – The Root Directory
+	$ wget -c https://rcn-ee.com/rootfs/eewiki/minfs/debian-10.4-minimal-armhf-2020-05-10.tar.xz
+	$ tar -xvf debian-10.4-minimal-armhf-2020-05-10.tar.xz
 
-Everything on your Linux system is located under the / directory, known as the root directory. You can think of the / directory as being similar to the C:\ directory on Windows – but this isn’t strictly true, as Linux doesn’t have drive letters. While another partition would be located at D:\ on Windows, this other partition would appear in another folder under / on Linux.
+### Assuming Mounting Point
 
-#### /bin – Essential User Binaries
+Mounting point for the SDcard could be various paths:
 
-The /bin directory contains the essential user binaries (programs) that must be present when the system is mounted in single-user mode. Applications such as Firefox are stored in /usr/bin, while important system programs and utilities such as the bash shell are located in /bin. The /usr directory may be stored on another partition – placing these files in the /bin directory ensures the system will have these important utilities even if no other file systems are mounted. The /sbin directory is similar – it contains essential system administration binaries.
+	/media/rootfs/
+	/run/media/vuser/rootfs/
 
-#### /boot – Static Boot Files
+Assuming /run/media/vuser/rootfs mounting point in this example!
 
-The /boot directory contains the files needed to boot the system – for example, the GRUB boot loader’s files and your Linux kernels are stored here. The boot loader’s configuration files aren’t located here, though – they’re in /etc with the other configuration files.
+### Copy Root File System
 
-#### /cdrom – Historical Mount Point for CD-ROMs
+	$ sudo tar xfvp ./*-*-*-armhf-*/armhf-rootfs-*.tar -C /run/media/vuser/rootfs
+	$ sync
+	$ sudo chown root:root /run/media/vuser/rootfs
+	$ sudo chmod 755 /run/media/vuser/rootfs/
 
-The /cdrom directory isn’t part of the FHS standard, but you’ll still find it on Ubuntu and other operating systems. It’s a temporary location for CD-ROMs inserted in the system. However, the standard location for temporary media is inside the /media directory.
+WARNING: Please, do note that in the /run/media/vuser/rootfs/boot/ there is NO
+any data, since the given Debian Root File System tends to be GENERIC Root
+Tree, applicable for ANY ARM architecture!
 
-#### /dev – Device Files
+### Set uname_r in /boot/uEnv.txt
 
-Linux exposes devices as files, and the /dev directory contains a number of special files that represent devices. These are not actual files as we know them, but they appear as files – for example, /dev/sda represents the first SATA drive in the system. If you wanted to partition it, you could start a partition editor and tell it to edit /dev/sda.
+	$ sudo sh -c "echo 'uname_r=${kernel_version}' >> /run/media/vuser/rootfs/boot/uEnv.txt"
 
-This directory also contains pseudo-devices, which are virtual devices that don’t actually correspond to hardware. For example, /dev/random produces random numbers. /dev/null is a special device that produces no output and automatically discards all input – when you pipe the output of a command to /dev/null, you discard it.
+### Building a Custom BB-kernel on the cross-compiling (HOST) platform - The preffered method
+https://github.com/RobertCNelson/bb-kernel
 
-#### /etc – Configuration Files
+Current development is found under branches.
 
-The /etc directory contains configuration files, which can generally be edited by hand in a text editor. Note that the /etc/ directory contains system-wide configuration files – user-specific configuration files are located in each user’s home directory.
+Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v4.19
 
-#### /home – Home Folders
+Execute the following to build the custom menuconfig:
 
-The /home directory contains a home folder for each user. For example, if your user name is bob, you have a home folder located at /home/bob. This home folder contains the user’s data files and user-specific configuration files. Each user only has write access to their own home folder and must obtain elevated permissions (become the root user) to modify other files on the system.
+	host$ git clone https://github.com/RobertCNelson/bb-kernel.git
+	host$ cd bb-kernel
+	host$ git remote show origin
+	host$ git checkout am33x-v5.7
+	host$ ./build_kernel.sh
 
-#### /lib – Essential Shared Libraries
+After building the kernel the following 4 files are placed in the .../bb-kernel/deploy/
+directory (example for the `uname -r`, in this case 5.7.0-rc6-bone5 kernel):
 
-The /lib directory contains libraries needed by the essential binaries in the /bin and /sbin folder. Libraries needed by the binaries in the /usr/bin folder are located in /usr/lib.
+	[vuser@fedora31-ssd bb-kernel-5.7.0-rc6-bone5]$ cd deploy/
+	[vuser@fedora31-ssd deploy]$ ls -al
+	total 31932
+	drwxr-xr-x.  2 vuser vboxusers     4096 May 26 21:45 .
+	drwxr-xr-x. 11 vuser vboxusers     4096 May 27 07:14 ..
+	-rw-r--r--.  1 vuser vboxusers   673198 May 26 21:45 5.7.0-rc6-bone5-dtbs.tar.gz
+	-rw-r--r--.  1 vuser vboxusers 23056720 May 26 21:45 5.7.0-rc6-bone5-modules.tar.gz
+	-rwxr-xr-x.  1 vuser vboxusers  8771136 May 26 21:44 5.7.0-rc6-bone5.zImage
+	-rw-r--r--.  1 vuser vboxusers   179383 May 26 21:44 config-5.7.0-rc6-bone5
+	[vuser@fedora31-ssd deploy]$
 
-#### /lost+found – Recovered Files
+### Add bash Kernel Version ENV Variable
 
-Each Linux file system has a lost+found directory. If the file system crashes, a file system check will be performed at next boot. Any corrupted files found will be placed in the lost+found directory, so you can attempt to recover as much data as possible.
+	$ export kernel_version=5.7.0-rc6-bone5
 
-#### /media – Removable Media
+### Copy Config (.config) File
 
-The /media directory contains subdirectories where removable media devices inserted into the computer are mounted. For example, when you insert a CD into your Linux system, a directory will automatically be created inside the /media directory. You can access the contents of the CD inside this directory.
+	$ sudo cp -v ./bb-kernel/deploy/config-${kernel_version} /run/media/vuser/rootfs/boot/config-${kernel_version}
 
-#### /mnt – Temporary Mount Points
+### Copy Kernel Image
 
-Historically speaking, the /mnt directory is where system administrators mounted temporary file systems while using them. For example, if you’re mounting a Windows partition to perform some file recovery operations, you might mount it at /mnt/windows. However, you can mount other file systems anywhere on the system.
+	$ sudo cp -v ./bb-kernel/deploy/${kernel_version}.zImage /run/media/vuser/rootfs/boot/vmlinuz-${kernel_version}
 
-#### /opt – Optional Packages
+### Copy Kernel Device Tree Binaries
 
-The /opt directory contains subdirectories for optional software packages. It’s commonly used by proprietary software that doesn’t obey the standard file system hierarchy – for example, a proprietary program might dump its files in /opt/application when you install it.
+	$ sudo mkdir -p /run/media/vuser/rootfs/boot/dtbs/${kernel_version}/
+	$ sudo tar xfv ./bb-kernel/deploy/${kernel_version}-dtbs.tar.gz -C /run/media/vuser/rootfs/boot/dtbs/${kernel_version}/
 
-#### /proc – Kernel & Process Files
+### Copy Kernel Modules
 
-The /proc directory similar to the /dev directory because it doesn’t contain standard files. It contains special files that represent system and process information.
+	$ sudo tar xfv ./bb-kernel/deploy/${kernel_version}-modules.tar.gz -C /run/media/vuser/rootfs/
 
-#### /root – Root Home Directory
+### Copy System.map File
 
-The /root directory is the home directory of the root user. Instead of being located at /home/root, it’s located at /root. This is distinct from /, which is the system root directory.
+	$ sudo cp -v ./bb-kernel/KERNEL/System.map /run/media/vuser/rootfs/boot/System.map-${kernel_version}
 
-#### /run – Application State Files
+### Port Kernel Source Tree into Target's /run/media/vuser/rootfs/usr/src/
 
-The /run directory is fairly new, and gives applications a standard place to store transient files they require like sockets and process IDs. These files can’t be stored in /tmp because files in /tmp may be deleted.
-/sbin – System Administration Binaries
+	$ cd bb_kernel/KERNEL
+	$ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 mrproper
+	$ sudo mkdir /run/media/vuser/rootfs/usr/src/${kernel_version}
+	$ sudo cp -Rfp . /run/media/vuser/rootfs/usr/src/${kernel_version}
 
-The /sbin directory is similar to the /bin directory. It contains essential binaries that are generally intended to be run by the root user for system administration.
+### Create Proper Soft Links on the Target
 
-#### /selinux – SELinux Virtual File System
+	$ cd /run/media/vuser/rootfs/lib/modules/${kernel_version}
+	$ sudo rm /run/media/vuser/rootfs/lib/modules/${kernel_version}/source
+	$ sudo rm /run/media/vuser/rootfs/lib/modules/${kernel_version}/build
+	$ sudo ln -s /usr/src/${kernel_version} source
+	$ sudo ln -s /usr/src/${kernel_version}	build
+	$ sudo reboot
 
-If your Linux distribution uses SELinux for security (Fedora and Red Hat, for example), the /selinux directory contains special files used by SELinux. It’s similar to /proc. Ubuntu doesn’t use SELinux, so the presence of this folder on Ubuntu appears to be a bug.
+### Generate initrd-generic-$(uname -r).img using its own kernel $(uname -r)
 
-#### /srv – Service Data
+	$ cd /boot
+	$ sudo dracut /boot/initrd-generic-$(uname -r).img $(uname -r)
 
-The /srv directory contains “data for services provided by the system.” If you were using the Apache HTTP server to serve a website, you’d likely store your website’s files in a directory inside the /srv directory.
+### [OPTIONAL] Create the GENERIC initramfs/initrd for the very first time by custom script
+https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md
 
-#### /sys - Kernel Driver Interface
+### File Systems Table (/etc/fstab)
 
-The /sys directory is an interface to the kernel. Specifically, it provides a filesystem-like view of information and configuration settings that the kernel provides, much like /proc. Writing to these files may or may not write to the actual device, depending on the setting you're changing. It isn't only for managing devices, though that's a common use case. /sys was introduced before the Linux kernel reached 2.6 (back when there was a 2.4/2.5 split).
+	$ sudo sh -c "echo '/dev/mmcblk0p1 / auto errors=remount-ro 0 1' >> /run/media/vuser/rootfs/etc/fstab"
 
-#### /tmp – Temporary Files
+### Set Networking to work
 
-Applications store temporary files in the /tmp directory. These files are generally deleted whenever your system is restarted and may be deleted at any time by utilities such as tmpwatch.
+Edit: /etc/network/interfaces file
 
-#### /usr – User Binaries & Read-Only Data
+	$ sudo nano /run/media/vuser/rootfs/etc/network/interfaces
 
-The /usr directory contains applications and files used by users, as opposed to applications and files used by the system. For example, non-essential applications are located inside the /usr/bin directory instead of the /bin directory and non-essential system administration binaries are located in the /usr/sbin directory instead of the /sbin directory. Libraries for each are located inside the /usr/lib directory. The /usr directory also contains other directories – for example, architecture-independent files like graphics are located in /usr/share.
+Add to the /etc/network/interfaces:
 
-The /usr/local directory is where locally compiled applications install to by default – this prevents them from mucking up the rest of the system.
+	auto lo
+	iface lo inet loopback
 
-#### /var – Variable Data Files
+	auto eth0
+	iface eth0 inet dhcp
 
-The /var directory is the writable counterpart to the /usr directory, which must be read-only in normal operation. Log files and everything else that would normally be written to /usr during normal operation are written to the /var directory. For example, you’ll find log files in /var/log.
+### Remove microSD/SD card
 
-For more detailed technical information about the Linux file system hierarchy, consult the Filesystem Hierarchy Standard documentation.
+	$ sync
+	$ sudo umount /run/media/vuser/rootfs
