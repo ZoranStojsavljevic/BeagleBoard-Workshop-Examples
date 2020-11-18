@@ -44,26 +44,27 @@ Execute the following to build the custom menuconfig:
 	host$ git clone https://github.com/RobertCNelson/bb-kernel.git
 	host$ cd bb-kernel
 	host$ git remote show origin
-	host$ git checkout am33x-v5.7
+	host$ git checkout am33x-v5.8
+	host$ git branch ## to verify the execution of the last command
 	host$ ./build_kernel.sh
 
 After building the kernel the following 4 files are placed in the .../bb-kernel/deploy/
-directory (example for the `uname -r`, in this case 5.7.0-rc6-bone5 kernel):
+directory (example for the `uname -r`, in this case 5.8.18-bone23 kernel):
 
-	[vuser@fedora31-ssd bb-kernel-5.7.0-rc6-bone5]$ cd deploy/
+	[vuser@fedora31-ssd bb-kernel-5.8.18-bone23]$ cd deploy/
 	[vuser@fedora31-ssd deploy]$ ls -al
 	total 31932
 	drwxr-xr-x.  2 vuser vboxusers     4096 May 26 21:45 .
 	drwxr-xr-x. 11 vuser vboxusers     4096 May 27 07:14 ..
-	-rw-r--r--.  1 vuser vboxusers   673198 May 26 21:45 5.7.0-rc6-bone5-dtbs.tar.gz
-	-rw-r--r--.  1 vuser vboxusers 23056720 May 26 21:45 5.7.0-rc6-bone5-modules.tar.gz
-	-rwxr-xr-x.  1 vuser vboxusers  8771136 May 26 21:44 5.7.0-rc6-bone5.zImage
-	-rw-r--r--.  1 vuser vboxusers   179383 May 26 21:44 config-5.7.0-rc6-bone5
+	-rw-r--r--.  1 vuser vboxusers   673198 May 26 21:45 5.8.18-bone23-dtbs.tar.gz
+	-rw-r--r--.  1 vuser vboxusers 23056720 May 26 21:45 5.8.18-bone23-modules.tar.gz
+	-rwxr-xr-x.  1 vuser vboxusers  8771136 May 26 21:44 5.8.18-bone23.zImage
+	-rw-r--r--.  1 vuser vboxusers   179383 May 26 21:44 config-5.8.18-bone23
 	[vuser@fedora31-ssd deploy]$
 
 ### Add bash Kernel Version ENV Variable
 
-	$ export kernel_version=5.7.0-rc6-bone5
+	$ export kernel_version=5.8.18-bone23
 
 ### Copy Config (.config) File
 
@@ -102,17 +103,34 @@ directory (example for the `uname -r`, in this case 5.7.0-rc6-bone5 kernel):
 	$ sudo ln -s /usr/src/${kernel_version}	build
 	$ sudo reboot
 
-### Generate initrd-generic-$(uname -r).img using its own kernel $(uname -r)
+### Copy Module.symvers File (for out-of-tree device driver compilation)
 
-	$ cd /boot
-	$ sudo dracut /boot/initrd-generic-$(uname -r).img $(uname -r)
-
-### [OPTIONAL] Create the GENERIC initramfs/initrd for the very first time by custom script
-https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md
+	cp -v ./bb-kernel/KERNEL/Module.symvers /run/media/vuser/rootfs/usr/src/5.8.18-bone23/
 
 ### File Systems Table (/etc/fstab)
 
 	$ sudo sh -c "echo '/dev/mmcblk0p1 / auto errors=remount-ro 0 1' >> /run/media/vuser/rootfs/etc/fstab"
+
+### Target Board (after booting up to linux prompt)
+
+#### Generate initrd-generic-$(uname -r).img
+
+	debian@arm:~$ cd /boot
+	debian@arm:/boot$ sudo dracut /boot/initrd-generic-$(uname -r).img $(uname -r)
+
+#### Make Target Kernel Configuration in /usr/src/$(uname -r)/
+
+To create include/generated/autoconf.h or include/config/auto.conf, the following should be ran: 'make oldconfig && make prepare'.
+
+	debian@arm:~$ cd /usr/src/5.8.18-bone23/
+	debian@arm:/usr/src/5.8.18-bone23$ make oldconfig && make prepare
+
+#### To prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
+
+	debian@arm:/usr/src/5.8.18-bone23$ sudo make scripts prepare
+
+### [OPTIONAL] Create the GENERIC initramfs/initrd for the very first time by custom script
+https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md
 
 ### Set Networking to work
 
