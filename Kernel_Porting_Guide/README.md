@@ -37,7 +37,7 @@ https://github.com/RobertCNelson/bb-kernel
 
 Current development is found under branches.
 
-Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v4.19
+Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v5.8
 
 Execute the following to build the custom menuconfig:
 
@@ -64,7 +64,7 @@ directory (example for the `uname -r`, in this case 5.8.18-bone23 kernel):
 
 ### Add bash Kernel Version ENV Variable
 
-	$ export kernel_version=5.8.18-bone23
+	$ export kernel_version=`uname -r`
 
 ### Copy Config (.config) File
 
@@ -74,25 +74,35 @@ directory (example for the `uname -r`, in this case 5.8.18-bone23 kernel):
 
 	$ sudo cp -v ./bb-kernel/deploy/${kernel_version}.zImage /run/media/vuser/rootfs/boot/vmlinuz-${kernel_version}
 
+### Copy Kernel Modules
+
+	$ sudo tar xfv ./bb-kernel/deploy/${kernel_version}-modules.tar.gz -C /run/media/vuser/rootfs/
+
 ### Copy Kernel Device Tree Binaries
 
 	$ sudo mkdir -p /run/media/vuser/rootfs/boot/dtbs/${kernel_version}/
 	$ sudo tar xfv ./bb-kernel/deploy/${kernel_version}-dtbs.tar.gz -C /run/media/vuser/rootfs/boot/dtbs/${kernel_version}/
 
-### Copy Kernel Modules
-
-	$ sudo tar xfv ./bb-kernel/deploy/${kernel_version}-modules.tar.gz -C /run/media/vuser/rootfs/
-
 ### Copy System.map File
 
 	$ sudo cp -v ./bb-kernel/KERNEL/System.map /run/media/vuser/rootfs/boot/System.map-${kernel_version}
+
+### Copy Module.symvers File (for out-of-tree device driver compilation)
+
+	## Copy Module.symvers temporary to /run/media/vuser/rootfs/boot/ directory
+	$ sudo cp -v ./bb-kernel/KERNEL/Module.symvers /run/media/vuser/rootfs/boot/
 
 ### Port Kernel Source Tree into Target's /run/media/vuser/rootfs/usr/src/
 
 	$ cd bb_kernel/KERNEL
 	$ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make -j8 mrproper
 	$ sudo mkdir /run/media/vuser/rootfs/usr/src/${kernel_version}
-	$ sudo cp -Rfp . /run/media/vuser/rootfs/usr/src/${kernel_version}
+	$ sudo cp -Rfp . /run/media/vuser/rootfs/usr/src/${kernel_version}/
+
+### Move Module.symvers File to the proper location
+
+	## Since cleanup deletes Module.symvers as well, move it from safe location to the destination
+	$ sudo mv -v /run/media/vuser/rootfs/boot/Module.symvers /run/media/vuser/rootfs/usr/src/${kernel_version}/
 
 ### Create Proper Soft Links on the Target
 
@@ -102,10 +112,6 @@ directory (example for the `uname -r`, in this case 5.8.18-bone23 kernel):
 	$ sudo ln -s /usr/src/${kernel_version} source
 	$ sudo ln -s /usr/src/${kernel_version}	build
 	$ sudo reboot
-
-### Copy Module.symvers File (for out-of-tree device driver compilation)
-
-	cp -v ./bb-kernel/KERNEL/Module.symvers /run/media/vuser/rootfs/usr/src/5.8.18-bone23/
 
 ### File Systems Table (/etc/fstab)
 
