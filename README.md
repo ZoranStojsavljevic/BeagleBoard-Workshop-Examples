@@ -40,9 +40,11 @@ The ETH click attached to the PocketBeagle Techlab Cape is SPI to ETH, for the w
 
 For the PB automatic detection, the following must be done:
 
-#### [1] Shorten flash's WP pin to GND
+#### [1] Shorten flash's WP pin to GND (JMP1 to shorten WP to the GND)
 
-![](Images/WP.jpg)
+This image is part of the the Pocket Beagle TechLab Cape schematic.
+
+![](Images/WP.png)
 
 Please, do note that flash uses i2c-1 (MikroBUS uses i2c-2)!
 
@@ -58,7 +60,7 @@ Please, do note that flash uses i2c-1 (MikroBUS uses i2c-2)!
 
 #### [3] MikroBUS driver must be loaded at the kernel booting time
 
-For built-in MikroBUS driver, this is a mandatory requirement.
+For built-in MikroBUS driver into 5.8.18-bone23, this is a mandatory requirement.
 
 The .config file MikroBUS configuration:
 
@@ -72,6 +74,8 @@ The .config file MikroBUS configuration:
 	$ cat .config | grep MIKROBUS
 	CONFIG_MIKROBUS=m
 
+Current (subject to change) Out-Of-Tree MikroBUS driver: https://github.com/ZoranStojsavljevic/mikrobus
+
 #### [4] Flash programming (with WP connected to the GND) must be done
 
 	echo 24c32 0x57 > /sys/bus/i2c/devices/i2c-2/new_device
@@ -80,7 +84,7 @@ The .config file MikroBUS configuration:
 
 NOTE: the programming i2c used for flash is i2c-1, i2c used on the MikroBUS is i2c-2.
 
-Please, do note that this is the test/experimental manifest, which used ONLY ONE SPI-ETH-CLICK
+Please, do note that this is the test/experimental manifest, which used ONLY single ETH-CLICK
 manifest programmed in it!
 
 The content of the flash after programming:
@@ -99,9 +103,7 @@ The content of the flash after programming:
 
 For the real one, hundreds of clicks' manifests must be at one time programmed into flash.
 
-Please, consult the following page for that:
-
-https://github.com/vaishnav98/manifesto/blob/mikrobusv3/install.sh
+Please, consult the following page for that: https://github.com/vaishnav98/manifesto/blob/mikrobusv3/install.sh
 
 Please, after all these operations are done on the target (Pocket Beagle), $sudo reboot
 command must be issued!
