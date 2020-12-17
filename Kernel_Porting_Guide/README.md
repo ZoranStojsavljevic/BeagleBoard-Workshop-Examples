@@ -128,12 +128,15 @@ directory (example for the `uname -r`, in this case 5.8.18-bone23 kernel):
 
 To create include/generated/autoconf.h or include/config/auto.conf, the following should be ran: 'make oldconfig && make prepare'.
 
-	debian@arm:~$ cd /usr/src/5.8.18-bone23/
-	debian@arm:/usr/src/5.8.18-bone23$ make oldconfig && make prepare
+	debian@arm:~$ cd /usr/src/$(uname -r)
+	## To syncronize local clock with files' timestamps
+	echo "Syncronize local clock with files' timestamps"
+	debian@arm:~$ find . -exec touch {} \;
+	debian@arm:/usr/src/$(uname -r)$ make oldconfig && make prepare
 
 #### To prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
 
-	debian@arm:/usr/src/5.8.18-bone23$ sudo make scripts prepare
+	debian@arm:/usr/src/$(uname -r)$ sudo make scripts prepare
 
 ### [OPTIONAL] Create the GENERIC initramfs/initrd for the very first time by custom script
 https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md

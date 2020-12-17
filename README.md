@@ -1,4 +1,4 @@
-### BBB_PB-Workshop-Examples
+## BBB_PB-Workshop-Examples
 
 This git was created in order to capture Beagle Bone Black (BBB) as well as Pocket Beagle (PB)
 Embedded Linux Lecture: Linux/C/GIT.
@@ -15,7 +15,7 @@ The distro represented in the Linux embedded BBB/PB course is Debian Buster.
 
 It is rather loose recommendation/heuristic than deterministic approach/method.
 
-### Pocket Beagle configuration
+### Pocket Beagle mikrobus configuration
 
 ![](Images/PB.jpg)
 
@@ -26,17 +26,28 @@ USB port), as well as console (UART to USB) cable (very powerful, isn't it?).
 
 The ETH click attached to the PocketBeagle Techlab Cape is SPI to ETH, for the www network.
 
-#### Kernel used from RobertCNelson's repositories
+#### Kernel used from RobertCNelson's repositories (at minimum):
 
-	uname_r=5.8.18-bone23
+	uname_r=5.8.18-bone24
 
-#### Defconfig file used from RobertCNelson's repositories
+#### The defconfig file used from RobertCNelson's repositories
+https://github.com/RobertCNelson/linux-stable-rcn-ee/commit/9ece52245bdc494f3c27ac1fa32d8589300e1b7f
 
 	rcn-ee_defconfig
 
-### [EXPERIMENTAL] Pocket Beagle (PB) MikroBUS click automatic detection
+### MIKROBUSV2 configuration
 
-[WARNING] Please, do note that this topic is subject to the HW/FW/MikroBUS device driver change.
+The mikrobusv2 branch is defined here:
+
+https://github.com/ZoranStojsavljevic/mikrobus/tree/mikrobusv2
+
+To run mikrobusv2 branch Out Of the kernel Tree (OOT), the following setting must be done to the
+original rcn-ee_defconfig:
+
+	$ cat rcn-ee_defconfig | grep MIKROBUS=
+	CONFIG_MIKROBUS=m
+
+[EXPERIMENTAL] Pocket Beagle (PB) MikroBUS click automatic detection
 
 For the PB automatic detection, the following must be done:
 
@@ -46,9 +57,9 @@ This image is part of the the Pocket Beagle TechLab Cape schematic.
 
 ![](Images/WP.png)
 
-Please, do note that flash uses i2c-1 (MikroBUS uses i2c-2)!
-
 #### [2] Configure /boot/uEnv.txt with the correct MikroBUS bus overlay
+
+Please, do note that flash uses i2c-1 @ 0x57 (PB-MIKROBUS-0 uses i2c-2)!
 
 	root@arm:~# ls -al /proc/device-tree/chosen/overlays/
 	total 0
@@ -60,21 +71,23 @@ Please, do note that flash uses i2c-1 (MikroBUS uses i2c-2)!
 
 #### [3] MikroBUS driver must be loaded at the kernel booting time
 
-For built-in MikroBUS driver into 5.8.18-bone23, this is a mandatory requirement.
+For built-in MikroBUS driver into 5.8.18-bone24/, this is a mandatory requirement.
 
 The .config file MikroBUS configuration:
 
-	$ cat .config | grep MIKROBUS
+	$ cat .config | grep MIKROBUS=
 	CONFIG_MIKROBUS=y
 
-For Out-Of-Tree MikroBUS driver, MikroBUS driver must be added as name in the file /etc/modules .
+For Out-Of-Tree MikroBUS driver, the following entities must be added to the file /etc/modules :
+
+	mikrobus
 
 The .config file MikroBUS configuration:
 
-	$ cat .config | grep MIKROBUS
+	$ cat .config | grep MIKROBUS=
 	CONFIG_MIKROBUS=m
 
-Current (subject to change) Out-Of-Tree MikroBUS driver: https://github.com/ZoranStojsavljevic/mikrobus
+Current Out-Of-Tree MikroBUS driver: https://github.com/ZoranStojsavljevic/mikrobus/tree/mikrobusv2
 
 #### [4] Flash programming (with WP connected to the GND) must be done
 
@@ -108,4 +121,75 @@ Please, consult the following page for that: https://github.com/vaishnav98/manif
 Please, after all these operations are done on the target (Pocket Beagle), $sudo reboot
 command must be issued!
 
-### --- Happy MikroBUS clicks discovery! ---
+### MIKROBUSV3 configuration
+
+The mikrobusv3 branch is defined here:
+
+https://github.com/ZoranStojsavljevic/mikrobus/tree/mikrobusv3
+
+To run mikrobusv3 branch Out Of the kernel Tree (OOT), the following setting must be done to the
+original rcn-ee_defconfig:
+
+	$ cat rcn-ee_defconfig | grep MIKROBUS=
+	CONFIG_MIKROBUS=m
+
+	$ cat rcn-ee_defconfig | grep grep CONFIG_W1=
+	CONFIG_W1=m
+
+	$ cat rcn-ee_defconfig | grep CONFIG_W1_MASTER_GPIO=
+	CONFIG_W1_MASTER_GPIO=m
+
+[EXPERIMENTAL] Pocket Beagle (PB) MikroBUS click automatic detection
+
+For the PB automatic detection, the following must be done:
+
+#### [1] Configure /boot/uEnv.txt with the correct MikroBUS bus overlay
+
+Please, do note that for mikrobus3 PB-MIKROBUS-0 uses original i2c-1!
+
+	root@arm:~# ls -al /proc/device-tree/chosen/overlays/
+	total 0
+	drwxr-xr-x 2 root root  0 Dec  4 12:25 .
+	drwxr-xr-x 3 root root  0 Dec  4 12:25 ..
+	-r--r--r-- 1 root root  9 Dec  4 12:25 name
+	-r--r--r-- 1 root root 25 Dec  4 12:25 PB-MIKROBUS-0
+	root@arm:~#
+
+#### [2] MikroBUS driver must be loaded at the kernel booting time
+
+For built-in MikroBUS driver into 5.8.18-bone24/, this is a mandatory requirement.
+
+The .config file MikroBUS configuration:
+
+	$ cat .config | grep MIKROBUS=
+	CONFIG_MIKROBUS=y
+
+	$ cat .config | grep grep CONFIG_W1=
+	CONFIG_W1=y
+
+	$ cat .config | grep CONFIG_W1_MASTER_GPIO=
+	CONFIG_W1_MASTER_GPIO=y
+
+For Out-Of-Tree MikroBUS driver, the following entities must be added to the file /etc/modules :
+
+	w1-gpio
+	mikrobus
+	mikrobus_id
+
+The .config file MikroBUS configuration:
+
+	$ cat .config | grep MIKROBUS=
+	CONFIG_MIKROBUS=m
+
+	$ cat .config | grep grep CONFIG_W1=
+	CONFIG_W1=m
+
+	$ cat .config | grep CONFIG_W1_MASTER_GPIO=
+	CONFIG_W1_MASTER_GPIO=m
+
+Current Out-Of-Tree MikroBUS driver: https://github.com/ZoranStojsavljevic/mikrobus/tree/mikrobusv3
+
+Please, after all these operations are done on the target (Pocket Beagle), $sudo reboot
+command must be issued!
+
+#### --- Happy MikroBUS clicks discovery! ---
