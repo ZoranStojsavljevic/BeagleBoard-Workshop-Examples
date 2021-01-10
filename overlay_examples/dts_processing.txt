@@ -1,3 +1,0 @@
-## Target BBB or PB .dts cpp preprocessing (example)!
-cpp -nostdinc -I /usr/src/${kernel_version}/include -I arch -undef -x assembler-with-cpp PB-SPI0-ETH-CLICK.dts > PB-SPI0-ETH-CLICK.dts.processed
-dtc -@ -I dts -O dtb -o PB-SPI0-ETH-CLICK.dtbo PB-SPI0-ETH-CLICK.dts.processed

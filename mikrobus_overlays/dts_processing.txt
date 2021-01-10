@@ -1,0 +1,7 @@
+## Target BBB or PB .dts cpp preprocessing (example)!
+
+cpp -nostdinc -I /usr/src/$(uname -r)/include -I arch -undef -x assembler-with-cpp PB-MIKROBUS-0.dts > PB-MIKROBUS-0.dts.processed
+dtc -@ -I dts -O dtb -o PB-MIKROBUS-0.dtbo PB-MIKROBUS-0.dts.processed
+
+cpp -nostdinc -I /usr/src/$(uname -r)/include -I arch -undef -x assembler-with-cpp PB-MIKROBUS-TEST.dts > PB-MIKROBUS-TEST.dts.processed
+dtc -@ -I dts -O dtb -o PB-MIKROBUS-TEST.dtbo PB-MIKROBUS-TEST.dts.processed

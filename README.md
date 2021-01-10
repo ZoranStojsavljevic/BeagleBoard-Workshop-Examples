@@ -1,4 +1,4 @@
-## BBB_PB-Workshop-Examples
+## BeagleBoard-Workshop-Examples
 
 This git was created in order to capture Beagle Bone Black (BBB) as well as Pocket Beagle (PB)
 Embedded Linux Lecture: Linux/C/GIT.
