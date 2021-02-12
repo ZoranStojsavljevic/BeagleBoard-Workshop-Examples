@@ -15,7 +15,7 @@ The distro represented in the Linux embedded BBB/PB course is Debian Buster.
 
 It is rather loose recommendation/heuristic than deterministic approach/method.
 
-### Pocket Beagle mikrobus configuration
+### PB (Pocket Beagle) MikroBUS configuration
 
 ![](Images/PB.jpg)
 
@@ -26,28 +26,33 @@ USB port), as well as console (UART to USB) cable (very powerful, isn't it?).
 
 The ETH click attached to the PocketBeagle Techlab Cape is SPI to ETH, for the www network.
 
-#### Kernel used from RobertCNelson's repositories (at minimum):
+#### Latest PB kernel used from rcn (RobertCNelson's) repositories:
+
+	uname_r=5.9.16-bone25
+
+#### Tested/working PB kernels (by the author of this repo) from rcn (RobertCNelson's) repositories:
 
 	uname_r=5.8.18-bone24
+	uname_r=5.9.16-bone25
 
 #### The defconfig file used from RobertCNelson's repositories
 https://github.com/RobertCNelson/linux-stable-rcn-ee/commit/9ece52245bdc494f3c27ac1fa32d8589300e1b7f
 
 	rcn-ee_defconfig
 
-### MIKROBUSV2 configuration
+### MikroBUS V2 configuration
 
 The mikrobusv2 branch is defined here:
 
 https://github.com/ZoranStojsavljevic/mikrobus/tree/mikrobusv2
 
-To run mikrobusv2 branch Out Of the kernel Tree (OOT), the following setting must be done to the
+To run mikrobusv2 branch OOT (Out Of the kernel Tree), the following setting must be done to the
 original rcn-ee_defconfig:
 
 	$ cat rcn-ee_defconfig | grep MIKROBUS=
 	CONFIG_MIKROBUS=m
 
-[EXPERIMENTAL] Pocket Beagle (PB) MikroBUS click automatic detection
+[EXPERIMENTAL] Pocket Beagle MikroBUS click automatic detection
 
 For the PB automatic detection, the following must be done:
 
@@ -71,14 +76,14 @@ Please, do note that flash uses i2c-1 @ 0x57 (PB-MIKROBUS-0 uses i2c-2)!
 
 #### [3] MikroBUS driver must be loaded at the kernel booting time
 
-For built-in MikroBUS driver into 5.8.18-bone24/, this is a mandatory requirement.
+For built-in MikroBUS driver into rcn tested kernels, this is a mandatory requirement.
 
 The .config file MikroBUS configuration:
 
 	$ cat .config | grep MIKROBUS=
 	CONFIG_MIKROBUS=y
 
-For Out-Of-Tree MikroBUS driver, the following entities must be added to the file /etc/modules :
+For Out-Of-Tree (OOT) MikroBUS driver, the following entities must be added to the file /etc/modules :
 
 	mikrobus
 
@@ -121,7 +126,7 @@ Please, consult the following page for that: https://github.com/vaishnav98/manif
 Please, after all these operations are done on the target (Pocket Beagle), $sudo reboot
 command must be issued!
 
-### MIKROBUSV3 configuration
+### MikroBUS V3 configuration
 
 The mikrobusv3 branch is defined here:
 
@@ -157,7 +162,7 @@ Please, do note that for mikrobus3 PB-MIKROBUS-0 uses original i2c-1!
 
 #### [2] MikroBUS driver must be loaded at the kernel booting time
 
-For built-in MikroBUS driver into 5.8.18-bone24/, this is a mandatory requirement.
+For built-in MikroBUS driver into rcn tested kernels, this is a mandatory requirement.
 
 The .config file MikroBUS configuration:
 

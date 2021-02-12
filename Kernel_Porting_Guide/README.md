@@ -37,29 +37,30 @@ https://github.com/RobertCNelson/bb-kernel
 
 Current development is found under branches.
 
-Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v5.8
+Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v5.9
 
 Execute the following to build the custom menuconfig:
 
 	host$ git clone https://github.com/RobertCNelson/bb-kernel.git
 	host$ cd bb-kernel
 	host$ git remote show origin
-	host$ git checkout am33x-v5.8
+	host$ git checkout am33x-v5.9
 	host$ git branch ## to verify the execution of the last command
+	host$ git describe
 	host$ ./build_kernel.sh
 
 After building the kernel the following 4 files are placed in the .../bb-kernel/deploy/
-directory (example for the `uname -r`, in this case 5.8.18-bone23 kernel):
+directory (example for the: kernel_version = `uname -r`):
 
-	[vuser@fedora31-ssd bb-kernel-5.8.18-bone23]$ cd deploy/
+	[vuser@fedora31-ssd bb-kernel-${kernel_version}]$ cd deploy/
 	[vuser@fedora31-ssd deploy]$ ls -al
 	total 31932
 	drwxr-xr-x.  2 vuser vboxusers     4096 May 26 21:45 .
 	drwxr-xr-x. 11 vuser vboxusers     4096 May 27 07:14 ..
-	-rw-r--r--.  1 vuser vboxusers   673198 May 26 21:45 5.8.18-bone23-dtbs.tar.gz
-	-rw-r--r--.  1 vuser vboxusers 23056720 May 26 21:45 5.8.18-bone23-modules.tar.gz
-	-rwxr-xr-x.  1 vuser vboxusers  8771136 May 26 21:44 5.8.18-bone23.zImage
-	-rw-r--r--.  1 vuser vboxusers   179383 May 26 21:44 config-5.8.18-bone23
+	-rw-r--r--.  1 vuser vboxusers   673198 May 26 21:45 ${kernel_version}-dtbs.tar.gz
+	-rw-r--r--.  1 vuser vboxusers 23056720 May 26 21:45 ${kernel_version}-modules.tar.gz
+	-rwxr-xr-x.  1 vuser vboxusers  8771136 May 26 21:44 ${kernel_version}.zImage
+	-rw-r--r--.  1 vuser vboxusers   179383 May 26 21:44 config-${kernel_version}
 	[vuser@fedora31-ssd deploy]$
 
 ### Add bash Kernel Version ENV Variable
@@ -132,11 +133,13 @@ To create include/generated/autoconf.h or include/config/auto.conf, the followin
 	## To syncronize local clock with files' timestamps
 	echo "Syncronize local clock with files' timestamps"
 	debian@arm:~$ find . -exec touch {} \;
-	debian@arm:/usr/src/$(uname -r)$ make oldconfig && make prepare
+	debian@arm:/usr/src/$(uname -r)$ su -m
+	Password:
+	debian@arm:/usr/src/$(uname -r)# make oldconfig && make prepare
 
 #### To prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
 
-	debian@arm:/usr/src/$(uname -r)$ sudo make scripts prepare
+	debian@arm:/usr/src/$(uname -r)# make scripts prepare
 
 ### [OPTIONAL] Create the GENERIC initramfs/initrd for the very first time by custom script
 https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md
