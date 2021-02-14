@@ -84,14 +84,13 @@ directory (example for the: kernel_version = `uname -r`):
 	$ sudo mkdir -p /run/media/vuser/rootfs/boot/dtbs/${kernel_version}/
 	$ sudo tar xfv ./bb-kernel/deploy/${kernel_version}-dtbs.tar.gz -C /run/media/vuser/rootfs/boot/dtbs/${kernel_version}/
 
-### Copy System.map File
+### Save System.map for out-of-tree device driver compilation
 
-	$ sudo cp -v ./bb-kernel/KERNEL/System.map /run/media/vuser/rootfs/boot/System.map-${kernel_version}
+	$ sudo cp -v ./bb-kernel/KERNEL/System.map ./bb-kernel/deploy/System.map
 
-### Copy Module.symvers File (for out-of-tree device driver compilation)
+### Save Module.symvers for out-of-tree device driver compilation
 
-	## Copy Module.symvers temporary to /run/media/vuser/rootfs/boot/ directory
-	$ sudo cp -v ./bb-kernel/KERNEL/Module.symvers /run/media/vuser/rootfs/boot/
+	$ sudo cp -v ./bb-kernel/KERNEL/Module.symvers ./bb-kernel/deploy/Module.symvers
 
 ### Port Kernel Source Tree into Target's /run/media/vuser/rootfs/usr/src/
 
@@ -100,10 +99,14 @@ directory (example for the: kernel_version = `uname -r`):
 	$ sudo mkdir /run/media/vuser/rootfs/usr/src/${kernel_version}
 	$ sudo cp -Rfp . /run/media/vuser/rootfs/usr/src/${kernel_version}/
 
-### Move Module.symvers File to the proper location
+### Copy Module.symvers file to the target /usr/src/${kernel_version}/
 
-	## Since cleanup deletes Module.symvers as well, move it from safe location to the destination
-	$ sudo mv -v /run/media/vuser/rootfs/boot/Module.symvers /run/media/vuser/rootfs/usr/src/${kernel_version}/
+	$ sudo cp -v ../../bb-kernel/deploy/Module.symvers /run/media/vuser/rootfs/usr/src/${kernel_version}/Module.symvers
+
+### Copy System.map File to the target /boot/ and /usr/src/${kernel_version}/
+
+	$ sudo cp -v ../../bb-kernel/deploy/System.map /run/media/vuser/rootfs/boot/System.map-${kernel_version}
+	$ sudo cp -v ../../bb-kernel/deploy/System.map /run/media/vuser/rootfs/usr/src/${kernel_version}/System.map
 
 ### Create Proper Soft Links on the Target
 
@@ -112,7 +115,6 @@ directory (example for the: kernel_version = `uname -r`):
 	$ sudo rm /run/media/vuser/rootfs/lib/modules/${kernel_version}/build
 	$ sudo ln -s /usr/src/${kernel_version} source
 	$ sudo ln -s /usr/src/${kernel_version}	build
-	$ sudo reboot
 
 ### File Systems Table (/etc/fstab)
 
@@ -137,9 +139,41 @@ To create include/generated/autoconf.h or include/config/auto.conf, the followin
 	Password:
 	debian@arm:/usr/src/$(uname -r)# make oldconfig && make prepare
 
-#### To prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
+#### Kernel < 5.10.0: to prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
 
 	debian@arm:/usr/src/$(uname -r)# make scripts prepare
+
+#### Kernel >= 5.10.0: to prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
+
+	debian@arm:/usr/src/$(uname -r)# make modules_prepare
+
+	root@arm:/usr/src/5.10.14-bone22# make modules_prepare
+		CALL	scripts/checksyscalls.sh
+		CALL	scripts/atomic/check-atomics.sh
+		LDS	scripts/module.lds		<<======= NEW ADDITION =======
+
+Please, do pay attention to the difference from previous kernels and 5.10.0 onwards: LDS     scripts/module.lds
+
+The 5.10.0 patch changing the behaviour is the following:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/Makefile?id=746b25b1aa0f5736d585728ded70a8141da91edb
+
+	Preprocess scripts/modules.lds.S to allow CONFIG options in the module linker script
+
+	diff --git a/Makefile b/Makefile
+	index ebbd34801476a..e71979882e4fc 100644
+	--- a/Makefile
+	+++ b/Makefile
+
+	@@ -1377,7 +1386,7 @@ endif
+	 # using awk while concatenating to the final file.
+
+	 PHONY += modules
+	-modules: $(if $(KBUILD_BUILTIN),vmlinux) modules_check
+	+modules: $(if $(KBUILD_BUILTIN),vmlinux) modules_check modules_prepare
+	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.modpost
+
+	PHONY += modules_check
 
 ### [OPTIONAL] Create the GENERIC initramfs/initrd for the very first time by custom script
 https://github.com/ZoranStojsavljevic/BBB_Workshop_Examples/tree/master/Generic_Initrd_Porting_Guide/README.md

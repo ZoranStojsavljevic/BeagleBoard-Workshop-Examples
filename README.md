@@ -28,12 +28,13 @@ The ETH click attached to the PocketBeagle Techlab Cape is SPI to ETH, for the w
 
 #### Latest PB kernel used from rcn (RobertCNelson's) repositories:
 
-	uname_r=5.9.16-bone25
+	uname_r=5.10.14-bone22
 
 #### Tested/working PB kernels (by the author of this repo) from rcn (RobertCNelson's) repositories:
 
 	uname_r=5.8.18-bone24
 	uname_r=5.9.16-bone25
+	uname_r=5.10.14-bone22
 
 #### The defconfig file used from RobertCNelson's repositories
 https://github.com/RobertCNelson/linux-stable-rcn-ee/commit/9ece52245bdc494f3c27ac1fa32d8589300e1b7f
