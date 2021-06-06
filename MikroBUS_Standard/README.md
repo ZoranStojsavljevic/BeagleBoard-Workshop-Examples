@@ -27,3 +27,10 @@ https://raw.githubusercontent.com/wiki/beagleboard/pocketbeagle/images/mikrobus-
 		MIKROBUS_PIN_AN         = 0x0B,
 		MIKROBUS_PORT_PIN_COUNT = 0x0C,
 	};
+
+#### Pocket Beagle Pinout
+http://www.righto.com/2017/12/hands-on-with-pocketbeagle-tiny-25.html
+
+https://lh3.googleusercontent.com/-6ZiEY5TB8rM/WiQ4mxgp9JI/AAAAAAABGd4/q1deqXZvJvEQ75HuzrYcqRf1eiV2Lp4-gCHMYBhgL/w9999/PocketBeagle_pinout.png
+
+![](../Images/PocketBeagle_pinout.png)
