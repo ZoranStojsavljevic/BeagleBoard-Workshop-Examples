@@ -1,0 +1,26 @@
+From 3ae43ace91282548e8ebf6cc2fc86767a41aca24 Mon Sep 17 00:00:00 2001
+From: Robert Nelson <robertcnelson@gmail.com>
+Date: Fri, 4 Jun 2021 11:19:16 -0500
+Subject: [PATCH] backports: spidev: from: linux.git
+
+Reference: v5.13-rc4
+Signed-off-by: Robert Nelson <robertcnelson@gmail.com>
+---
+ drivers/spi/spidev.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 8cb4d923aeaa..f56e0e975a46 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -683,6 +683,7 @@ static const struct of_device_id spidev_dt_ids[] = {
+ 	{ .compatible = "dh,dhcom-board" },
+ 	{ .compatible = "menlo,m53cpld" },
+ 	{ .compatible = "cisco,spi-petra" },
++	{ .compatible = "micron,spi-authenta" },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, spidev_dt_ids);
+-- 
+2.30.2
+
