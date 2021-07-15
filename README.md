@@ -26,15 +26,18 @@ USB port), as well as console (UART to USB) cable (very powerful, isn't it?).
 
 The ETH click attached to the PocketBeagle Techlab Cape is SPI to ETH, for the www network.
 
-#### Latest PB kernel used from rcn (RobertCNelson's) repositories:
+#### Latest PB kernel used from rcn (RobertCNelson's) repositories, working with MikroBUS patches:
 
-	uname_r=5.10.14-bone22
+	uname_r=5.12.13-bone23
+
+MikroBUS patches, which need to be applied for kernel 5.12.13-bone23 to work:
+
+https://github.com/ZoranStojsavljevic/kernel-mikrobus-patches/tree/5.12
 
 #### Tested/working PB kernels (by the author of this repo) from rcn (RobertCNelson's) repositories:
 
 	uname_r=5.8.18-bone24
-	uname_r=5.9.16-bone25
-	uname_r=5.10.14-bone22
+	uname_r=5.12.13-bone23
 
 #### The defconfig file used from RobertCNelson's repositories
 https://github.com/RobertCNelson/linux-stable-rcn-ee/commit/9ece52245bdc494f3c27ac1fa32d8589300e1b7f
@@ -139,7 +142,7 @@ original rcn-ee_defconfig:
 	$ cat rcn-ee_defconfig | grep MIKROBUS=
 	CONFIG_MIKROBUS=m
 
-	$ cat rcn-ee_defconfig | grep grep CONFIG_W1=
+	$ cat rcn-ee_defconfig | grep CONFIG_W1=
 	CONFIG_W1=m
 
 	$ cat rcn-ee_defconfig | grep CONFIG_W1_MASTER_GPIO=
@@ -170,7 +173,7 @@ The .config file MikroBUS configuration:
 	$ cat .config | grep MIKROBUS=
 	CONFIG_MIKROBUS=y
 
-	$ cat .config | grep grep CONFIG_W1=
+	$ cat .config | grep CONFIG_W1=
 	CONFIG_W1=y
 
 	$ cat .config | grep CONFIG_W1_MASTER_GPIO=
@@ -187,7 +190,7 @@ The .config file MikroBUS configuration:
 	$ cat .config | grep MIKROBUS=
 	CONFIG_MIKROBUS=m
 
-	$ cat .config | grep grep CONFIG_W1=
+	$ cat .config | grep CONFIG_W1=
 	CONFIG_W1=m
 
 	$ cat .config | grep CONFIG_W1_MASTER_GPIO=
@@ -195,7 +198,7 @@ The .config file MikroBUS configuration:
 
 Current Out-Of-Tree MikroBUS driver: https://github.com/ZoranStojsavljevic/mikrobus/tree/mikrobusv3
 
-Please, after all these operations are done on the target (Pocket Beagle), $sudo reboot
+Please, after all these operations are done on the target (Pocket Beagle), $ sudo reboot
 command must be issued!
 
 #### --- Happy MikroBUS clicks discovery! ---

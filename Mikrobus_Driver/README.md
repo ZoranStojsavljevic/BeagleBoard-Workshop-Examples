@@ -20,3 +20,5 @@ https://github.com/vaishnav98/mikrobus
 ### Some variances of the MikroBUS drivers, cloned from: https://github.com/vaishnav98/mikrobus
 https://github.com/ZoranStojsavljevic/mikrobus
 
+### Patches to be applied for kernels 5.12.x series to work with MikroBUS driver:
+https://github.com/ZoranStojsavljevic/kernel-mikrobus-patches/tree/5.12

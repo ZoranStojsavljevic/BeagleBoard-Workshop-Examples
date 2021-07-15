@@ -141,18 +141,20 @@ To create include/generated/autoconf.h or include/config/auto.conf, the followin
 
 #### Kernel < 5.10.0: to prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
 
-	debian@arm:/usr/src/$(uname -r)# make scripts prepare
+	root@arm:/usr/src/$(uname -r)# cp /boot/config-$(uname -r) .config
+	root@arm:/usr/src/$(uname -r)# make scripts prepare
 
 #### Kernel >= 5.10.0: to prepare out-of-tree device driver compilation in /usr/src/$(uname -r)/
 
-	debian@arm:/usr/src/$(uname -r)# make modules_prepare
-
-	root@arm:/usr/src/5.10.14-bone22# make modules_prepare
+	root@arm:/usr/src/$(uname -r)# cp /boot/config-$(uname -r) .config
+	root@arm:/usr/src/$(uname -r)# make modules_prepare
 		CALL	scripts/checksyscalls.sh
 		CALL	scripts/atomic/check-atomics.sh
 		LDS	scripts/module.lds		<<======= NEW ADDITION =======
 
-Please, do pay attention to the difference from previous kernels and 5.10.0 onwards: LDS     scripts/module.lds
+Please, do pay attention to the difference from previous kernels and 5.10.0 onwards:
+
+		LDS     scripts/module.lds
 
 The 5.10.0 patch changing the behaviour is the following:
 
