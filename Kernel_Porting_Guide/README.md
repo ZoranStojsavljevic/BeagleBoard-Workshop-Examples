@@ -5,8 +5,8 @@
 
 Download Debian Root File System:
 
-	$ wget -c https://rcn-ee.com/rootfs/eewiki/minfs/debian-10.4-minimal-armhf-2020-05-10.tar.xz
-	$ tar -xvf debian-10.4-minimal-armhf-2020-05-10.tar.xz
+	$ wget -c https://rcn-ee.com/rootfs/eewiki/minfs/debian-10.10-minimal-armhf-2021-06-20.tar.xz
+	$ tar -xvf debian-10.10-minimal-armhf-2021-06-20.tar.xz
 
 ### Assuming Mounting Point
 
@@ -37,14 +37,14 @@ https://github.com/RobertCNelson/bb-kernel
 
 Current development is found under branches.
 
-Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v5.9
+Example: https://github.com/RobertCNelson/bb-kernel/tree/am33x-v5.14
 
 Execute the following to build the custom menuconfig:
 
 	host$ git clone https://github.com/RobertCNelson/bb-kernel.git
 	host$ cd bb-kernel
 	host$ git remote show origin
-	host$ git checkout am33x-v5.9
+	host$ git checkout am33x-v5.14
 	host$ git branch ## to verify the execution of the last command
 	host$ git describe
 	host$ ./build_kernel.sh
