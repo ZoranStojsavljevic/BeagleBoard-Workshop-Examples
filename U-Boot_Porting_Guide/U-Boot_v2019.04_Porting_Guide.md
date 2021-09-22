@@ -1,4 +1,4 @@
-## U-Boot 04.2019 bootloader: U-Boot - for both BBB and PB
+## U-Boot v2019.04 bootloader: U-Boot - for both BBB and PB
 
 Das U-Boot – the Universal Boot Loader: http://www.denx.de/wiki/U-Boot
 
